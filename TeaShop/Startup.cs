@@ -54,6 +54,8 @@ namespace TeaShop
                 RequestPath = new PathString("/lib")
             });
 
+            DbInitializer.Seed(app);
+
             //app.Run(async (context) =>
             //{
             //    await context.Response.WriteAsync("Hello World!");
