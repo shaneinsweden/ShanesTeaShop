@@ -143,7 +143,7 @@ namespace TeaShop.Models
 
         public IEnumerable<Tea> TeasOfTheWeek => throw new NotImplementedException();
 
-        public Tea GetTeaById(int teadId)
+        public Tea GetTeaById(int teaId)
         {
             throw new NotImplementedException();
         }

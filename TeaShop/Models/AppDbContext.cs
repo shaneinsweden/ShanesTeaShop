@@ -12,5 +12,8 @@ namespace TeaShop.Models
         {
 
         }
+
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Tea> Teas { get; set; }
     }
 }
