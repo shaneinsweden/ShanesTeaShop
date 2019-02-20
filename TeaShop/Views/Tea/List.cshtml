@@ -3,18 +3,7 @@
 <h1>@Model.CurrentCategory</h1>
 @foreach (var tea in Model.Teas)
 {
-    <div class="col-md-4 col-md-10 col-md-4">
-        <div class="thumbnail">
-            <img src="@tea.ImageThumbnailUrl" alt="">
-            <div class="caption">
-                <h3 class="pull-right">@tea.Price.ToString("c")</h3>
-                <h3>
-                    <a>@tea.Name</a>
-                </h3>
-                <p>@tea.ShortDescription</p>
-            </div>
-        </div>
-    </div>
+   @Html.Partial("TeaOverviewSummary", tea)
 }
 
 

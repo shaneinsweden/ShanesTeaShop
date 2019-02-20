@@ -33,10 +33,15 @@ namespace TeaShop
             services.AddMvc();
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<ITeaRepository, TeaRepository>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<ShoppingCart>(sc => ShoppingCart.GetCart(sc));
+
+            services.AddMemoryCache();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env,IServiceProvider serviceProvider)
         {
             //if (env.IsDevelopment())
             //{
@@ -45,7 +50,9 @@ namespace TeaShop
 
             app.UseStatusCodePages();
             app.UseStaticFiles();
+            app.UseSession();
             app.UseMvcWithDefaultRoute();
+            
 
             app.UseStaticFiles(new StaticFileOptions()
             {
@@ -54,7 +61,8 @@ namespace TeaShop
                 RequestPath = new PathString("/lib")
             });
 
-            DbInitializer.Seed(app);
+            //DbInitializer.Seed(app);
+            DbInitializer.Seed(serviceProvider.GetRequiredService<AppDbContext>());
 
             //app.Run(async (context) =>
             //{
