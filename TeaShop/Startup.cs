@@ -29,7 +29,10 @@ namespace TeaShop
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(configurationRoot.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<AppDbContext>(options => options
+            .UseLazyLoadingProxies()
+            .UseSqlServer(configurationRoot.GetConnectionString("DefaultConnection")));
+
             services.AddMvc();
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<ITeaRepository, TeaRepository>();
@@ -51,7 +54,20 @@ namespace TeaShop
             app.UseStatusCodePages();
             app.UseStaticFiles();
             app.UseSession();
-            app.UseMvcWithDefaultRoute();
+            //app.UseMvcWithDefaultRoute();
+
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "categoryfilter",
+                    template: "Tea/{action}/{category?}",
+                    defaults: new { Controller = "Tea", action = "List" }
+                    );
+
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
             
 
             app.UseStaticFiles(new StaticFileOptions()

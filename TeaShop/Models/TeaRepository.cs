@@ -18,7 +18,14 @@ namespace TeaShop.Models
         public IEnumerable<Tea> Teas {
             get
             {
-                return _appDbContext.Teas.Include(c => c.Category);
+                var teas = _appDbContext.Teas.Include(c => c.Category);
+                var teasWithCategory = teas.Include("Category").ToList();
+                foreach (Tea t in teas)
+                {
+                    var cat = _appDbContext.Categories.FirstOrDefault(c => c.CategoryId == t.CategoryId);
+                    t.Category = cat;
+                }
+                return teasWithCategory;
              }
         }
 

@@ -7,11 +7,15 @@ namespace TeaShop.Models
 {
     public class Category
     {
+        public Category()
+        {
+
+        }
         public int CategoryId { get; set; }
         public Guid Id { get; set; }
         public string CategoryName { get; set; }
         public string Description { get; set; }
         public bool CaffieneFree { get; set; }
-        public List<Tea> Teas { get; set; }
+        public virtual List<Tea> Teas { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using TeaShop.Models;
+using TeaShop.ViewModels;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -27,13 +28,36 @@ namespace TeaShop.Controllers
             _categoryRepository = categoryRepository;
         }
 
-        public ViewResult List()
+        public ViewResult List(string category)
         {
-            ViewModels.TeasListViewModel teasListViewModel = new ViewModels.TeasListViewModel();
-            teasListViewModel.Teas = _teaRepository.Teas;
-            teasListViewModel.CurrentCategory = "Green Tea";
+            IEnumerable<Tea> teas;
+            string currentyCategory = string.Empty;
 
-            return View(teasListViewModel);
+            if (string.IsNullOrEmpty(category))
+            {
+                teas = _teaRepository.Teas.OrderBy(t => t.TeaId);
+                currentyCategory = "All Teas";
+            }
+            else
+            {
+                var tempCategory  = _categoryRepository.Categories.FirstOrDefault(c => c.CategoryName == category);
+                teas = _teaRepository.Teas
+                    .Where(t => t.Category.CategoryId == tempCategory.CategoryId)
+                    .OrderBy(t => t.TeaId);
+                
+                currentyCategory = tempCategory.CategoryName;
+            }
+
+            return View(new TeasListViewModel
+            {
+                Teas = teas,
+                CurrentCategory = currentyCategory
+            });
+            //ViewModels.TeasListViewModel teasListViewModel = new ViewModels.TeasListViewModel();
+            //teasListViewModel.Teas = _teaRepository.Teas;
+            //teasListViewModel.CurrentCategory = "Green Tea";
+
+            //return View(teasListViewModel);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace TeaShop.Models
     public class ShoppingCartItem
     {
         public int ShoppingCartItemId { get; set; }
-        public Tea Tea { get; set; }
+        public virtual Tea Tea { get; set; }
         public int Amount { get; set; }
         public string ShoppingCartId { get; set; }
     }
