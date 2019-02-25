@@ -40,11 +40,11 @@ namespace TeaShop.Controllers
             }
             else
             {
-                var tempCategory  = _categoryRepository.Categories.FirstOrDefault(c => c.CategoryName == category);
+                var tempCategory = _categoryRepository.Categories.FirstOrDefault(c => c.CategoryName == category);
                 teas = _teaRepository.Teas
                     .Where(t => t.Category.CategoryId == tempCategory.CategoryId)
                     .OrderBy(t => t.TeaId);
-                
+
                 currentyCategory = tempCategory.CategoryName;
             }
 
@@ -53,11 +53,23 @@ namespace TeaShop.Controllers
                 Teas = teas,
                 CurrentCategory = currentyCategory
             });
+
             //ViewModels.TeasListViewModel teasListViewModel = new ViewModels.TeasListViewModel();
             //teasListViewModel.Teas = _teaRepository.Teas;
             //teasListViewModel.CurrentCategory = "Green Tea";
 
             //return View(teasListViewModel);
         }
+
+
+        public IActionResult Details(int id)
+        {
+            var tea = _teaRepository.GetTeaById(id);
+            if (tea == null)
+                return NotFound();
+
+            return View(tea);
+        }
     }
+
 }

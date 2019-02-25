@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using TeaShop.Models;
 using TeaShop.ViewModels;
 
@@ -31,6 +33,28 @@ namespace TeaShop.Controllers
             };
 
             return View(shoppingCartViewModel);
+        }
+
+        public RedirectToActionResult AddToShoppingCart(int teaId)
+        {
+            var selectedTea = _teaRepository.Teas.FirstOrDefault(p => p.TeaId == teaId);
+
+            if (selectedTea != null)
+            {
+                _shoppingCart.AddToCart(selectedTea, 1);
+            }
+            return RedirectToAction("Index");
+        }
+
+        public RedirectToActionResult RemoveFromShoppingCart(int teaId)
+        {
+            var selectedTea = _teaRepository.Teas.FirstOrDefault(p => p.TeaId == teaId);
+
+            if (selectedTea != null)
+            {
+                _shoppingCart.RemoveFromCart(selectedTea);
+            }
+            return RedirectToAction("Index");
         }
     }
 }
