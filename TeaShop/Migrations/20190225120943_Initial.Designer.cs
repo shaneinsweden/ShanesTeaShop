@@ -10,8 +10,8 @@ using TeaShop.Models;
 namespace TeaShop.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190220123001_AddShoppingCartItem")]
-    partial class AddShoppingCartItem
+    [Migration("20190225120943_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,6 +37,82 @@ namespace TeaShop.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("TeaShop.Models.Order", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AddressLine1")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<string>("AddressLine2");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.Property<DateTime>("OrderPlaced");
+
+                    b.Property<decimal>("OrderTotal");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(25);
+
+                    b.Property<string>("State");
+
+                    b.Property<string>("ZipCode")
+                        .IsRequired()
+                        .HasMaxLength(10);
+
+                    b.HasKey("OrderId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("TeaShop.Models.OrderDetail", b =>
+                {
+                    b.Property<int>("OrderDetailId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Amount");
+
+                    b.Property<int>("OrderId");
+
+                    b.Property<decimal>("Price");
+
+                    b.Property<int>("TeaId");
+
+                    b.Property<Guid?>("TeaId1");
+
+                    b.HasKey("OrderDetailId");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("TeaId1");
+
+                    b.ToTable("OrderDetails");
                 });
 
             modelBuilder.Entity("TeaShop.Models.ShoppingCartItem", b =>
@@ -92,6 +168,18 @@ namespace TeaShop.Migrations
                     b.HasIndex("CategoryId1");
 
                     b.ToTable("Teas");
+                });
+
+            modelBuilder.Entity("TeaShop.Models.OrderDetail", b =>
+                {
+                    b.HasOne("TeaShop.Models.Order", "Order")
+                        .WithMany("OrderLines")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("TeaShop.Models.Tea", "Tea")
+                        .WithMany()
+                        .HasForeignKey("TeaId1");
                 });
 
             modelBuilder.Entity("TeaShop.Models.ShoppingCartItem", b =>

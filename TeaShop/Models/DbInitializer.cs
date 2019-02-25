@@ -177,6 +177,34 @@ namespace TeaShop.Models
                         InTeaBags = false,
                         ImageThumbnailUrl = "/Images/vanilla-organic-rooibos-sm.jpg",
                         ImageUrl = "/Images/vanilla-organic-rooibos.jpg"
+                    },
+                    new Tea
+                    {
+                        TeaId = 12,
+                        Id = new Guid("C2376498-B6AE-4760-AFF5-938A2E2D6BE5"),
+                        Name = "White Peony Supreme - No.148",
+                        LongDescription = "Named after the petals of the White Peony, this tea is characterised by its tender, downy-white leaves.",
+                        ShortDescription = "Tender, downy-white leaves.",
+                        Price = 4.5M,
+                        InStock = true,
+                        CategoryId = 1,
+                        InTeaBags = false,
+                        ImageThumbnailUrl = "/Images/supremepeonyweb-sm.jpg",
+                        ImageUrl = "/Images/supremepeonyweb.jpg"
+                    },
+                    new Tea
+                    {
+                        TeaId = 12,
+                        Id = new Guid("C2376498-B6AE-4760-AFF5-938A2E2D6BE5"),
+                        Name = "Imperial Jasmine Silver Needle Triune Tea Bags Individually Wrapped - No.9",
+                        LongDescription = "Naturally infused with the essential oils of jasmine flowers, this tea imparts a light flavour with floral notes.",
+                        ShortDescription = "A light flavour with floral notes.",
+                        Price = 34.2M,
+                        InStock = true,
+                        CategoryId = 1,
+                        InTeaBags = true,
+                        ImageThumbnailUrl = "/Images/JasmineNeedle-Envelop-sm.jpg",
+                        ImageUrl = "/Images/JasmineNeedle-Envelop.jpg"
                     }
                 );
             }

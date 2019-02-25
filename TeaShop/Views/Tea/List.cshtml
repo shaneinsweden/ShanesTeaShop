@@ -1,9 +1,74 @@
-﻿@model TeasListViewModel
+﻿
+<div id="teaDiv">
 
-<h1>@Model.CurrentCategory</h1>
-@foreach (var tea in Model.Teas)
-{
-   @Html.Partial("TeaOverviewSummary", tea)
+</div>
+
+@section scripts {
+    <script>
+
+        $(document).ready(function () {
+            LoadMoreTeas();
+        });
+
+        $(window).scroll(function () {
+            if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+                LoadMoreTeas();
+            }
+        });
+
+        function LoadMoreTeas() {
+
+            $.ajax({
+                type: 'GET',
+                url: '/api/TeaApi',
+                dataType: 'json',
+                success: function (jsonData) {
+                    if (jsonData == null) {
+                        alert('no data returned');
+                        return;
+                    }
+
+                    $.each(jsonData, function (index, tea) {
+
+                        var TeaSummaryString = '<div class="col-sm-4 col-lg-4 col-md-4"> ' +
+                            '  <div class="thumbnail">' +
+                            '     <img src="' + tea.imageThumbnailUrl + '" alt="">' +
+                            '      <div class="caption">' +
+                            '         <h3 class="pull-right">' + tea.price + '</h3>' +
+                            '         <h3>' +
+                            '             <a href=/Tea/Details/' + tea.teaId + '>' + tea.name + '</a>' +
+                            '         </h3>' +
+                            '         <p>' + tea.shortDescription + '</p>' +
+                            '    </div>' +
+                            '    <div class="addToCart">' +
+                            '        <p class="button">' +
+                            '             <a class="btn btn-primary" href=/ShoppingCart/AddToShoppingCart?teaId=' + tea.teaId + '>Add to cart</a>' +
+                            '         </p>' +
+                            '     </div>' +
+                            '  </div>' +
+                            '</div>';
+
+                        $('#teaDiv').append(TeaSummaryString);
+                    });
+                },
+                error: function (ex) {
+                    alert(ex);
+                }
+            });
+            return false;
+        }
+
+    </script>
 }
+
+
+@*  version 1
+        @model TeasListViewModel
+
+    <h1>@Model.CurrentCategory</h1>
+    @foreach (var tea in Model.Teas)
+    {
+       @Html.Partial("TeaOverviewSummary", tea)
+    }*@
 
 
