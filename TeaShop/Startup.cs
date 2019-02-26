@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,6 +34,8 @@ namespace TeaShop
             .UseLazyLoadingProxies()
             .UseSqlServer(configurationRoot.GetConnectionString("DefaultConnection")));
 
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<AppDbContext>();
             services.AddMvc();
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<ITeaRepository, TeaRepository>();
@@ -56,6 +59,7 @@ namespace TeaShop
             app.UseStatusCodePages();
             app.UseStaticFiles();
             app.UseSession();
+            app.UseAuthentication();
             //app.UseMvcWithDefaultRoute();
 
             app.UseMvc(routes =>
