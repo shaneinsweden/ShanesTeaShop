@@ -10,8 +10,8 @@ using TeaShop.Models;
 namespace TeaShop.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190225120943_Initial")]
-    partial class Initial
+    [Migration("20190226095941_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,18 +23,17 @@ namespace TeaShop.Migrations
 
             modelBuilder.Entity("TeaShop.Models.Category", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<bool>("CaffieneFree");
-
-                    b.Property<int>("CategoryId");
 
                     b.Property<string>("CategoryName");
 
                     b.Property<string>("Description");
 
-                    b.HasKey("Id");
+                    b.HasKey("CategoryId");
 
                     b.ToTable("Categories");
                 });
@@ -104,13 +103,11 @@ namespace TeaShop.Migrations
 
                     b.Property<int>("TeaId");
 
-                    b.Property<Guid?>("TeaId1");
-
                     b.HasKey("OrderDetailId");
 
                     b.HasIndex("OrderId");
 
-                    b.HasIndex("TeaId1");
+                    b.HasIndex("TeaId");
 
                     b.ToTable("OrderDetails");
                 });
@@ -125,7 +122,7 @@ namespace TeaShop.Migrations
 
                     b.Property<string>("ShoppingCartId");
 
-                    b.Property<Guid?>("TeaId");
+                    b.Property<int?>("TeaId");
 
                     b.HasKey("ShoppingCartItemId");
 
@@ -136,12 +133,11 @@ namespace TeaShop.Migrations
 
             modelBuilder.Entity("TeaShop.Models.Tea", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("TeaId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CategoryId");
-
-                    b.Property<Guid?>("CategoryId1");
 
                     b.Property<string>("ImageThumbnailUrl");
 
@@ -161,11 +157,9 @@ namespace TeaShop.Migrations
 
                     b.Property<string>("ShortDescription");
 
-                    b.Property<int>("TeaId");
+                    b.HasKey("TeaId");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("CategoryId1");
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Teas");
                 });
@@ -179,7 +173,8 @@ namespace TeaShop.Migrations
 
                     b.HasOne("TeaShop.Models.Tea", "Tea")
                         .WithMany()
-                        .HasForeignKey("TeaId1");
+                        .HasForeignKey("TeaId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("TeaShop.Models.ShoppingCartItem", b =>
@@ -193,7 +188,8 @@ namespace TeaShop.Migrations
                 {
                     b.HasOne("TeaShop.Models.Category", "Category")
                         .WithMany("Teas")
-                        .HasForeignKey("CategoryId1");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

@@ -12,7 +12,6 @@ namespace TeaShop.Models
 
         }
         public int CategoryId { get; set; }
-        public Guid Id { get; set; }
         public string CategoryName { get; set; }
         public string Description { get; set; }
         public bool CaffieneFree { get; set; }

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TeaShop.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,15 +12,15 @@ namespace TeaShop.Migrations
                 name: "Categories",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
-                    CategoryId = table.Column<int>(nullable: false),
+                    CategoryId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CategoryName = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     CaffieneFree = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Categories", x => x.Id);
+                    table.PrimaryKey("PK_Categories", x => x.CategoryId);
                 });
 
             migrationBuilder.CreateTable(
@@ -51,8 +51,8 @@ namespace TeaShop.Migrations
                 name: "Teas",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
-                    TeaId = table.Column<int>(nullable: false),
+                    TeaId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
                     ShortDescription = table.Column<string>(nullable: true),
                     LongDescription = table.Column<string>(nullable: true),
@@ -62,18 +62,17 @@ namespace TeaShop.Migrations
                     IsTeaOfTheWeek = table.Column<bool>(nullable: false),
                     InStock = table.Column<bool>(nullable: false),
                     InTeaBags = table.Column<bool>(nullable: false),
-                    CategoryId = table.Column<int>(nullable: false),
-                    CategoryId1 = table.Column<Guid>(nullable: true)
+                    CategoryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Teas", x => x.Id);
+                    table.PrimaryKey("PK_Teas", x => x.TeaId);
                     table.ForeignKey(
-                        name: "FK_Teas_Categories_CategoryId1",
-                        column: x => x.CategoryId1,
+                        name: "FK_Teas_Categories_CategoryId",
+                        column: x => x.CategoryId,
                         principalTable: "Categories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "CategoryId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -85,8 +84,7 @@ namespace TeaShop.Migrations
                     OrderId = table.Column<int>(nullable: false),
                     TeaId = table.Column<int>(nullable: false),
                     Amount = table.Column<int>(nullable: false),
-                    Price = table.Column<decimal>(nullable: false),
-                    TeaId1 = table.Column<Guid>(nullable: true)
+                    Price = table.Column<decimal>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -98,11 +96,11 @@ namespace TeaShop.Migrations
                         principalColumn: "OrderId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OrderDetails_Teas_TeaId1",
-                        column: x => x.TeaId1,
+                        name: "FK_OrderDetails_Teas_TeaId",
+                        column: x => x.TeaId,
                         principalTable: "Teas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "TeaId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -111,7 +109,7 @@ namespace TeaShop.Migrations
                 {
                     ShoppingCartItemId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    TeaId = table.Column<Guid>(nullable: true),
+                    TeaId = table.Column<int>(nullable: true),
                     Amount = table.Column<int>(nullable: false),
                     ShoppingCartId = table.Column<string>(nullable: true)
                 },
@@ -122,7 +120,7 @@ namespace TeaShop.Migrations
                         name: "FK_ShoppingCartItems_Teas_TeaId",
                         column: x => x.TeaId,
                         principalTable: "Teas",
-                        principalColumn: "Id",
+                        principalColumn: "TeaId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -132,9 +130,9 @@ namespace TeaShop.Migrations
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderDetails_TeaId1",
+                name: "IX_OrderDetails_TeaId",
                 table: "OrderDetails",
-                column: "TeaId1");
+                column: "TeaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ShoppingCartItems_TeaId",
@@ -142,9 +140,9 @@ namespace TeaShop.Migrations
                 column: "TeaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Teas_CategoryId1",
+                name: "IX_Teas_CategoryId",
                 table: "Teas",
-                column: "CategoryId1");
+                column: "CategoryId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

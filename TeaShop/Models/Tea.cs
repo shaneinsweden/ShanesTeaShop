@@ -8,7 +8,6 @@ namespace TeaShop.Models
     public class Tea
     {
         public int TeaId { get; set; }
-        public Guid Id { get; set; }
         public string Name { get; set; }
         public string ShortDescription { get; set; }
         public string LongDescription { get; set; }
