@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TeaShop.Models;
 
@@ -20,6 +21,14 @@ namespace TeaShop.Controllers
             _shoppingCart = shoppingCart;
         }
 
+        [Authorize]
+        public IActionResult Checkout()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize]
         public IActionResult Checkout(Order order)
         {
             var items = _shoppingCart.GetShoppingCartItems();
@@ -38,6 +47,7 @@ namespace TeaShop.Controllers
             }
             return View(order);
         }
+
 
         public IActionResult CheckoutComplete()
         {
