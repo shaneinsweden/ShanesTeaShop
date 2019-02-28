@@ -23,7 +23,8 @@ namespace TeaShop
         {
             configurationRoot = new ConfigurationBuilder()
              .SetBasePath(hostingEnvironment.ContentRootPath)
-             .AddJsonFile("appsettings.json")
+             //.AddJsonFile("appsettings.json")
+             .AddJsonFile($"appsettings.{hostingEnvironment.EnvironmentName}.json", true)
              .Build();
         }
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -51,12 +52,17 @@ namespace TeaShop
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env,IServiceProvider serviceProvider)
         {
-            //if (env.IsDevelopment())
-            //{
+            if (env.IsDevelopment())
+            {
                 app.UseDeveloperExceptionPage();
-            //}
+                app.UseStatusCodePages();
+                app.UseDatabaseErrorPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/AppException");
+            }
 
-            app.UseStatusCodePages();
             app.UseStaticFiles();
             app.UseSession();
             app.UseAuthentication();
