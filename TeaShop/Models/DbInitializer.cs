@@ -40,6 +40,7 @@ namespace TeaShop.Models
                             InStock = true,
                             CategoryId = 4,
                             InTeaBags = false,
+                            IsTeaOfTheWeek = true,
                             ImageThumbnailUrl = "/Images/EarlGrey-sm.jpg",
                             ImageUrl = "/Images/EarlGrey.jpg"
                         },
@@ -68,6 +69,7 @@ namespace TeaShop.Models
                             InStock = true,
                             CategoryId = 2,
                             InTeaBags = false,
+                            IsTeaOfTheWeek = true,
                             ImageThumbnailUrl = "/Images/jasmine-green-tea-sm.jpg",
                             ImageUrl = "/Images/jasmine-green-tea.jpg"
                         },
@@ -110,6 +112,7 @@ namespace TeaShop.Models
                             InStock = true,
                             CategoryId = 3,
                             InTeaBags = true,
+                            IsTeaOfTheWeek = true,
                             ImageThumbnailUrl = "/Images/taiwanese-ginseng-oolong-sm.jpg",
                             ImageUrl = "/Images/taiwanese-ginseng-oolong.jpg"
                         },
@@ -138,6 +141,7 @@ namespace TeaShop.Models
                             InStock = true,
                             CategoryId = 5,
                             InTeaBags = false,
+                            IsTeaOfTheWeek = true,
                             ImageThumbnailUrl = "/Images/pu-erh-standard-sm.jpg",
                             ImageUrl = "/Images/pu-erh-standard.jpg"
                         },
@@ -180,6 +184,7 @@ namespace TeaShop.Models
                             InStock = true,
                             CategoryId = 8,
                             InTeaBags = false,
+                            IsTeaOfTheWeek = true,
                             ImageThumbnailUrl = "/Images/vanilla-organic-rooibos-sm.jpg",
                             ImageUrl = "/Images/vanilla-organic-rooibos.jpg"
                         },

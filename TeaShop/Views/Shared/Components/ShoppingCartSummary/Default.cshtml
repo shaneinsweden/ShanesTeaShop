@@ -6,9 +6,13 @@
 @if (Model.ShoppingCart.ShoppingCartItems.Count > 0)
 {
     <li class="nav-item">
-        <a class="nav-link" href="#">
-                <i class="fas fa-shopping-cart"></i>
-                @Model.ShoppingCart.ShoppingCartItems.Count
+        <a class="nav-link"  asp-controller="ShoppingCart" asp-action="Index">
+            <i class="fas fa-shopping-cart"></i>
+            @Model.ShoppingCart.ShoppingCartItems.Count
         </a>
     </li>
 }
+
+@*<li>
+    <a class="dropdown-item" asp-controller="Tea" asp-action="List" asp-route-category="@category.CategoryName">@category.CategoryName</a>
+</li>*@
