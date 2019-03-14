@@ -1,13 +1,18 @@
 ﻿
+@model TeasListViewModel
 <div id="teaDiv">
-
+    <h1>@Model.CurrentCategory</h1>
+    @foreach (var tea in Model.Teas)
+    {
+        @Html.Partial("TeaOverviewSummary", tea)
+    }*
 </div>
 
 @section scripts {
     <script>
 
         $(document).ready(function () {
-            LoadMoreTeas();
+            //LoadMoreTeas();
         });
 
         $(window).scroll(function () {
@@ -30,11 +35,11 @@
 
                     $.each(jsonData, function (index, tea) {
 
-                        var TeaSummaryString = '<div class="col-sm-4 col-lg-4 col-md-4"> ' +
+                        var TeaSummaryString = '<div class="col-sm-4 col-md-4 col-md-4"> ' +
                             '  <div class="thumbnail">' +
                             '     <img src="' + tea.imageThumbnailUrl + '" alt="">' +
                             '      <div class="caption">' +
-                            '         <h3 class="pull-right">' + tea.price + '</h3>' +
+                            '         <h3 class="pull-right">' + "$" + tea.price + '</h3>' +
                             '         <h3>' +
                             '             <a href=/Tea/Details/' + tea.teaId + '>' + tea.name + '</a>' +
                             '         </h3>' +

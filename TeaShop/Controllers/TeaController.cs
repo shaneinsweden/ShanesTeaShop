@@ -18,6 +18,15 @@ namespace TeaShop.Controllers
         //    return View();
         //}
 
+        public ViewResult Search()
+        {
+            var homeViewModel = new HomeViewModel
+            {
+                TeasOfTheWeek = _teaRepository.TeasOfTheWeek
+            };
+
+            return View(homeViewModel);
+        }
 
         private readonly ITeaRepository _teaRepository;
         private readonly ICategoryRepository _categoryRepository;
