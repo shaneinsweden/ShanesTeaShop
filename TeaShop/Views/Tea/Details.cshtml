@@ -24,12 +24,20 @@
         }
         else
         {
+            <HR />
+            <h3>
+                Reviews
+            </h3>
+            <HR />
             @foreach (TeaReview tr in Model.TeaReviews)
             {
                 <h3>@tr.ReviewTitle</h3>
                 <h3>by @tr.ReviewedBy @tr.ReviewedOn</h3>
                 <h3>@Html.Raw(tr.ReviewText)</h3>
+                <HR />
             }
+            @*<a class="nav-link" asp-controller="Review" asp-action="AddReview" asp-route-TeaId="@Model.TeaId" asp-route-Username="@User.Identity">Add a review</a>*@
+            <a class="nav-link" asp-controller="Review" asp-action="AddReview" asp-route-TeaId="@Model.TeaId">Add a review</a>
         }
     </div>
 </div>

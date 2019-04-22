@@ -42,6 +42,7 @@ namespace TeaShop
             services.AddTransient<ITeaRepository, TeaRepository>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IOrderRepository, OrderRepository>();
+            services.AddTransient<IReviewRepository, ReviewRepository>();
             services.AddScoped<ShoppingCart>(sc => ShoppingCart.GetCart(sc));
             
 
