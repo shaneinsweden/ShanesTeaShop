@@ -12,5 +12,7 @@ namespace TeaShop.Models
         IEnumerable<Tea> TeasOfTheWeek { get; }
 
         Tea GetTeaById(int teaId);
+
+        IEnumerable<Tea> FindTeas(string searchString);
     }
 }

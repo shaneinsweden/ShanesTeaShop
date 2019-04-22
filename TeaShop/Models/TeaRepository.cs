@@ -8,6 +8,7 @@ namespace TeaShop.Models
 {
     public class TeaRepository : ITeaRepository
     {
+       
         private readonly AppDbContext _appDbContext;
 
         public TeaRepository(AppDbContext appDbContext)
@@ -37,6 +38,24 @@ namespace TeaShop.Models
             }
         }
 
+        public IEnumerable<Tea> FindTeas(string searchString)
+        {
+            string sqlStatement = "select * from Teas where name like '%" + searchString + "%'";
+
+            IEnumerable<Tea> foundTeas = _appDbContext.Teas.FromSql(sqlStatement).ToList();
+
+            if (foundTeas.Any())
+                return foundTeas;
+
+            sqlStatement = "select * from Teas where LongDescription like '%" + searchString + "%'";
+
+            foundTeas = _appDbContext.Teas.FromSql(sqlStatement).ToList();
+
+            if (foundTeas.Any())
+                return foundTeas;
+
+            return null;
+        }
 
         public Tea GetTeaById(int teaId)
         {

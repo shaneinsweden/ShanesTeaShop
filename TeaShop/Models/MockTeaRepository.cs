@@ -143,6 +143,11 @@ namespace TeaShop.Models
 
         public IEnumerable<Tea> TeasOfTheWeek => throw new NotImplementedException();
 
+        public IEnumerable<Tea> FindTeas(string searchString)
+        {
+            throw new NotImplementedException();
+        }
+
         public Tea GetTeaById(int teaId)
         {
             throw new NotImplementedException();

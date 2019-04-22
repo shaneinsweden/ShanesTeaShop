@@ -18,14 +18,15 @@ namespace TeaShop.Controllers
         //    return View();
         //}
 
-        public ViewResult Search()
+        public ViewResult Search(string searchString)
         {
-            var homeViewModel = new HomeViewModel
-            {
-                TeasOfTheWeek = _teaRepository.TeasOfTheWeek
-            };
+            var foundTeas = _teaRepository.FindTeas(searchString);
 
-            return View(homeViewModel);
+            return View(new TeasListViewModel
+            {
+                Teas = foundTeas,
+                CurrentCategory = "Search results for: " + searchString
+            });
         }
 
         private readonly ITeaRepository _teaRepository;
