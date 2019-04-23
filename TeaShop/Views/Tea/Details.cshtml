@@ -1,4 +1,8 @@
-﻿@model Tea
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Identity.EntityFrameworkCore
+
+@inject SignInManager<IdentityUser> SignInManager
+@model Tea
 
 <div class="thumbnail">
     <img alt="@Model.Name" src="@Model.ImageUrl">
@@ -9,9 +13,31 @@
         </h3>
         <h4>@Model.ShortDescription</h4>
         <p>@Model.LongDescription</p>
+
         <p class="button">
             <a class="btn btn-primary" asp-controller="ShoppingCart" asp-action="AddToShoppingCart"
                asp-route-teaId="@Model.TeaId">Add to cart</a>
         </p>
+        @if (!SignInManager.IsSignedIn(User))
+        {
+            <I>You need to be signed in to see or add reviews</I>
+        }
+        else
+        {
+            <HR />
+            <h3>
+                Reviews
+            </h3>
+            <HR />
+            @foreach (TeaReview tr in Model.TeaReviews)
+            {
+                <h3>@tr.ReviewTitle</h3>
+                <h3>by @tr.ReviewedBy @tr.ReviewedOn</h3>
+                <h3>@Html.Raw(tr.ReviewText)</h3>
+                <HR />
+            }
+            @*<a class="nav-link" asp-controller="Review" asp-action="AddReview" asp-route-TeaId="@Model.TeaId" asp-route-Username="@User.Identity">Add a review</a>*@
+            <a class="nav-link" asp-controller="Review" asp-action="AddReview" asp-route-TeaId="@Model.TeaId">Add a review</a>
+        }
     </div>
 </div>

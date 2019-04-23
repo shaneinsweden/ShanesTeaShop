@@ -219,6 +219,24 @@ namespace TeaShop.Models
                         );
                 }
 
+                if (!context.TeaReviews.Any())
+                {
+                    context.AddRange
+                    (
+                        new TeaReview
+                        {
+                            TeaReviewId = 1,
+                            TeaId = 1,
+                            ReviewedBy = "shane",
+                            ReviewedOn = new DateTime(2019, 4, 22, 14, 04, 0),
+                            ReviewTitle = "My favourite",
+                            ReviewText = "What a <b>great</b> tea, I absolutely love this stuff. For breakfast or all day it truly is the best",
+                            Rating = 5
+                        }
+
+                    );
+                }
+
                 context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT dbo.Teas ON");
                 context.SaveChanges();
                 context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT dbo.Teas OFF");

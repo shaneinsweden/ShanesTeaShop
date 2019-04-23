@@ -1,0 +1,13 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Identity.EntityFrameworkCore
+
+@inject SignInManager<IdentityUser> SignInManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <li class="nav-item"><a class="nav-link" id="addReviewLink" asp-controller="Review" asp-action="AddReview">Add Review</a></li>
+}
+else
+{
+    <I>You need to be signed in to see or add reviews</I>
+}

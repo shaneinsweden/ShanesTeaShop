@@ -19,5 +19,6 @@ namespace TeaShop.Models
         public bool InTeaBags { get; set; }
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; }
+        public virtual ICollection <TeaReview> TeaReviews { get; set; }
     }
 }
