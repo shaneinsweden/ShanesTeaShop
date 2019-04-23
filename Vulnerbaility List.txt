@@ -1,0 +1,14 @@
+weaknesses
+
+
+1. dont hide the password  remove this  [DataType(DataType.Password)] from LoginViewModel
+2. allow ananoymous acccess to or broken access to login controller
+3. take away the ValidateAntiForgeryToken on the loigin controller
+
+4. Set the web site in debug mode
+5. Bypass login restrictions to allow posting
+6. Denial of service by filling up with reviews?
+7. Brute forcing on the password
+
+add logging
+
